@@ -1,5 +1,6 @@
-<?php
-
+<h3 class="text-center p-2">Код для устранения несогласованности таблиц</h3>
+<pre>
+&lt;?php
 // Параметры подключения к базе данных
 $host = 'localhost';
 $dbname = 'database_name';
@@ -9,6 +10,9 @@ $password = 'password';
 try {
     // Подключение к базе данных
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+
+    // Установка режима ошибок PDO на исключения
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     //Добавляем index и foreign_key на "category" к "products"
     $pdo->query("ALTER TABLE `products` ADD INDEX `category_fk_idx` (`category_id` ASC) VISIBLE");
@@ -45,6 +49,7 @@ try {
 
     $pdo = null;
 } catch (PDOException $e) {
-    print "Error!: " . $e->getMessage() . "<br/>";
+    echo "Ошибка!: " . $e->getMessage() . &lt;/br&gt;;
     die();
 }
+</pre>
